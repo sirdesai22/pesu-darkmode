@@ -1,12 +1,14 @@
 {
   "manifest_version": 3,
-  "name": "Dark Mode Toggle",
+  "name": "Style Toggle Extension",
   "version": "1.0",
-  "description": "Toggle background color for 'menu-left' class.",
-  "permissions": ["activeTab", "scripting"],
-  "host_permissions": ["<all_urls>"],
+  "description": "Toggle custom CSS on any website.",
+  "permissions": ["scripting", "activeTab"],
+  "background": {
+    "service_worker": "background.js"
+  },
   "action": {
-    "default_popup": "popup.html",
-    "default_icon": "icon.png"
+    "default_title": "Toggle Styles",
+    "default_popup": "popup.html"
   }
 }

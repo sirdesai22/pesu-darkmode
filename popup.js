@@ -1,47 +1,138 @@
-document.getElementById("toggleSwitch").addEventListener("change", (event) => {
-    const isChecked = event.target.checked;
-
-    // Send a message to the content script
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        chrome.scripting.executeScript({
-            target: { tabId: tabs[0].id },
-            func: toggleMenuLeftBackground,
-            args: [isChecked],
-        });
-    });
+document.getElementById("toggle-style").addEventListener("click", () => {
+  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.scripting.executeScript({
+          target: { tabId: tabs[0].id },
+          function: toggleStyles,
+      });
+  });
 });
 
-// Function to toggle background for "menu-left"
-function toggleMenuLeftBackground(isChecked) {
-    const styleId = "menu-left-style";
-    const existingStyle = document.querySelector(`#${styleId}`);
+function toggleStyles() {
+  const styleId = "custom-style-toggle";
+  let styleTag = document.getElementById(styleId);
 
-    if (isChecked) {
-        if (!existingStyle) {
-            const style = document.createElement("style");
-            style.id = styleId;
-            style.textContent = `
-          body {
-          background-color: #262626 !important;
-          color: white !important;
-        }
-          #pge_menu {
-          background-color: #121212 !important;
-        }
-        * {
-          background-color: transparent !important;
-          color: white !important;
-          border: none !important;
-        }
-          .menu-left {
-        background-color: #121212 !important;
+  if (styleTag) {
+      styleTag.remove();
+  } else {
+      styleTag = document.createElement("style");
+      styleTag.id = styleId;
+      styleTag.textContent = `
+      body { 
+      background: #000; 
+      color: white !important; 
       }
-        `;
-            document.head.appendChild(style);
-        }
-    } else {
-        if (existingStyle) {
-            existingStyle.remove();
-        }
-    }
+
+      #pge_menu{ 
+      background:#151515; 
+      color: white !important; 
+      }
+
+      .app-name-font{
+      color: white !important;
+      }
+      
+      .menu-left{
+      
+      }
+
+      #StudentProfilePESUContent{
+      background:#262626; 
+      color: white !important; 
+      }
+
+      .events-announcements{
+      background:#000; 
+      color: orange !important; 
+      }
+
+      .anc-text{
+      color: orange !important; 
+      }
+
+      .panel-default{
+      background:#161616; 
+      color: orange !important; 
+      }
+
+      .panel-heading{
+      background:#000 !important; 
+      color: orange !important;
+      }
+
+      #semesters{
+      background:#000 !important; 
+      color: white !important;
+      }
+
+      tr:hover{
+      background:#000 !important; 
+      color: white !important;
+      }
+
+      thead{
+      background:#000 !important; 
+      }
+      th{
+        color: white !important;
+      }
+
+      .tab-content{
+      background:#262626 !important; 
+      color: white !important;
+      }
+
+      #courselistunit > li > a{
+      background:#151515 !important; 
+      color: orange !important;
+      }
+
+      #courseContentCategory > li > a{
+      background:#121212 !important; 
+      color: orange !important;
+      }
+
+      #courseMaterialContent > li > a{
+      background:#121212 !important; 
+      color: orange !important;
+      }
+
+      .link-preview {
+      background:#121212 !important; 
+      }
+
+      .coursecontent-navigation-area{
+      background:#121212 !important; 
+      color: orange !important;
+      }
+
+      .odd{
+      background:#121212 !important; 
+      }
+
+      .even{
+      background:#262626 !important; 
+      }
+
+      #assignmentTypeID{
+      background:#000 !important; 
+      }
+      
+      #showbc{
+      background:#0091cd !important; 
+      color: white !important;
+      }
+
+      .pagination > li > a{
+      background:#000 !important; 
+      color: orange !important;
+      }
+
+      .form-control{
+      background:#000 !important; 
+      color: white !important;
+      }
+
+      `;
+      document.head.appendChild(styleTag);
+  }
 }
