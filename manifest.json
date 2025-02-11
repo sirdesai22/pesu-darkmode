@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "Style Toggle Extension",
+  "name": "PESU DARK MODE",
   "version": "1.0",
   "description": "Toggle custom CSS on any PESU website.",
   "permissions": ["scripting", "activeTab"],
@@ -8,12 +8,10 @@
     "service_worker": "background.js"
   },
   "action": {
-    "default_title": "Toggle Styles",
+    "default_title": "PESU DARK MODE",
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "moon.png",
-      "48": "moon.png",
-      "128": "moon.png"
+      "16": "and.png"
     }
   }
 }
