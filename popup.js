@@ -1,9 +1,9 @@
 document.getElementById("toggle-style").addEventListener("click", () => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.scripting.executeScript({
-          target: { tabId: tabs[0].id },
-          function: toggleStyles,
-      });
+    chrome.scripting.executeScript({
+      target: { tabId: tabs[0].id },
+      function: toggleStyles,
+    });
   });
 });
 
@@ -12,11 +12,11 @@ function toggleStyles() {
   let styleTag = document.getElementById(styleId);
 
   if (styleTag) {
-      styleTag.remove();
+    styleTag.remove();
   } else {
-      styleTag = document.createElement("style");
-      styleTag.id = styleId;
-      styleTag.textContent = `
+    styleTag = document.createElement("style");
+    styleTag.id = styleId;
+    styleTag.textContent = `
       body { 
       background: #000; 
       color: white !important; 
@@ -132,7 +132,27 @@ function toggleStyles() {
       color: white !important;
       }
 
+      iframe{
+      filter: invert(90%) hue-rotate(180deg);
+      }
+
       `;
-      document.head.appendChild(styleTag);
+    document.head.appendChild(styleTag);
+
+    let fullScreen = document.createElement("a");
+    fullScreen.classList = "elem-fullscreen-link";
+    fullScreen.onclick = "openElemFullScreen(this)";
+    fullScreen.href = "javascript:void(0)";
+
+    let fullScreenIcon = document.createElement("span");
+    fullScreenIcon.classList = "fa fa-arrows-alt";
+    fullScreenIcon.onclick = "openElemFullScreen(this)";
+    fullScreenIcon.href = "javascript:void(0)";
+    fullScreenIcon.ariaHidden = true;
+
+    let fullScreenParent = document.getElementsByClassName("link-preview");
+
+    fullScreen.appendChild(fullScreenIcon);
+    fullScreenParent.appendChild(fullScreen);
   }
 }
