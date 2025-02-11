@@ -2,13 +2,18 @@
   "manifest_version": 3,
   "name": "Style Toggle Extension",
   "version": "1.0",
-  "description": "Toggle custom CSS on any website.",
+  "description": "Toggle custom CSS on any PESU website.",
   "permissions": ["scripting", "activeTab"],
   "background": {
     "service_worker": "background.js"
   },
   "action": {
     "default_title": "Toggle Styles",
-    "default_popup": "popup.html"
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "moon.png",
+      "48": "moon.png",
+      "128": "moon.png"
+    }
   }
 }
