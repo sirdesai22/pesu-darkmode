@@ -4,6 +4,7 @@
   "version": "1.1",
   "description": "Dark mode, motivational quotes & custom homepage for PESU Academy.",
   "permissions": ["scripting", "activeTab"],
+  "host_permissions": ["https://api.github.com/*"],
   "background": {
     "service_worker": "background.js"
   },

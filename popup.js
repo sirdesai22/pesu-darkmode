@@ -54,6 +54,36 @@ toggle.addEventListener("change", () => {
   });
 });
 
+// Fetch contributors from GitHub
+fetch("https://api.github.com/repos/sirdesai22/pesu-darkmode/contributors")
+  .then((res) => res.json())
+  .then((contributors) => {
+    const container = document.getElementById("dev-avatars");
+    container.innerHTML = "";
+    contributors.forEach((user) => {
+      const a = document.createElement("a");
+      a.className = "dev-link";
+      a.href = user.html_url;
+      a.target = "_blank";
+
+      const img = document.createElement("img");
+      img.className = "dev-img";
+      img.src = user.avatar_url;
+      img.alt = user.login;
+
+      const name = document.createElement("span");
+      name.className = "dev-name";
+      name.textContent = user.login;
+
+      a.appendChild(img);
+      a.appendChild(name);
+      container.appendChild(a);
+    });
+  })
+  .catch(() => {
+    // silently fail — skeletons remain
+  });
+
 function toggleStyles() {
   const styleId = "custom-style-toggle";
   let styleTag = document.getElementById(styleId);

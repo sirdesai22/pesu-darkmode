@@ -304,6 +304,21 @@
     }
 
     .dev-link:hover .dev-name { color: var(--orange); }
+
+    /* Skeleton loader */
+    .dev-skeleton {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(90deg, rgba(255,255,255,0.06) 25%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.06) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+    }
+
+    @keyframes shimmer {
+      0%   { background-position: 200% 0; }
+      100% { background-position: -200% 0; }
+    }
   </style>
 </head>
 <body>
@@ -347,19 +362,10 @@
   <!-- Devs -->
   <div class="card dev-card">
     <div class="dev-header">crafted by</div>
-    <div class="dev-avatars">
-      <a class="dev-link" href="https://www.linkedin.com/in/sirdesai-exe/" target="_blank">
-        <img class="dev-img" src="ps1.jpg" alt="Prathamesh">
-        <span class="dev-name">Prathamesh</span>
-      </a>
-      <a class="dev-link" href="https://www.linkedin.com/in/priyankarhaldar/" target="_blank">
-        <img class="dev-img" src="ph.jpg" alt="Priyankar">
-        <span class="dev-name">Priyankar</span>
-      </a>
-      <a class="dev-link" href="https://www.linkedin.com/in/rohan-gavada-00b541286/" target="_blank">
-        <img class="dev-img" src="rg.jpg" alt="Rohan">
-        <span class="dev-name">Rohan</span>
-      </a>
+    <div class="dev-avatars" id="dev-avatars">
+      <div class="dev-skeleton"></div>
+      <div class="dev-skeleton"></div>
+      <div class="dev-skeleton"></div>
     </div>
   </div>
 
