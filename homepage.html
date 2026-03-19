@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PESU — Start</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #080b14;
+      --surface: rgba(255, 255, 255, 0.04);
+      --surface-hover: rgba(249, 115, 22, 0.07);
+      --border: rgba(255, 255, 255, 0.07);
+      --border-hover: rgba(249, 115, 22, 0.35);
+      --orange: #f97316;
+      --orange-dim: rgba(249, 115, 22, 0.12);
+      --text: #e2e8f0;
+      --muted: #475569;
+      --muted-light: #64748b;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body {
+      background-image:
+        radial-gradient(ellipse 900px 500px at 50% -5%, rgba(249, 115, 22, 0.07) 0%, transparent 65%),
+        radial-gradient(ellipse at 0% 100%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+        radial-gradient(ellipse at 100% 10%, rgba(16, 185, 129, 0.03) 0%, transparent 40%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Subtle grid */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+      background-size: 64px 64px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Top bar */
+    .top-bar {
+      width: 100%;
+      max-width: 860px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 26px 32px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .brand {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .brand span { color: var(--orange); }
+
+    .ext-pill {
+      font-size: 11px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--muted-light);
+      border: 1px solid var(--border);
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: var(--surface);
+      letter-spacing: 0.02em;
+    }
+
+    /* Hero */
+    .hero {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 24px 40px;
+      width: 100%;
+      max-width: 860px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .greeting {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      margin-bottom: 18px;
+      opacity: 0;
+      animation: riseIn 0.7s ease 0.25s forwards;
+    }
+
+    .greeting span { color: var(--orange); }
+
+    /* Clock */
+    .clock {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: clamp(60px, 11vw, 104px);
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      color: #f1f5f9;
+      line-height: 1;
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: riseIn 0.7s ease 0.1s forwards;
+      user-select: none;
+    }
+
+    .colon {
+      color: var(--orange);
+      display: inline-block;
+      animation: blinkColon 1s step-end infinite;
+    }
+
+    @keyframes blinkColon {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.1; }
+    }
+
+    .date-display {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--muted-light);
+      letter-spacing: 0.07em;
+      margin-bottom: 44px;
+      opacity: 0;
+      animation: riseIn 0.7s ease 0.35s forwards;
+    }
+
+    /* Quick links */
+    .links-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      width: 100%;
+      max-width: 680px;
+      margin-bottom: 44px;
+      opacity: 0;
+      animation: riseIn 0.7s ease 0.45s forwards;
+    }
+
+    .link-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 10px 16px;
+      text-decoration: none;
+      color: var(--text);
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 9px;
+      transition: all 0.25s cubic-bezier(0.34, 1.4, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--orange);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+
+    .link-card:hover {
+      border-color: var(--border-hover);
+      background: var(--surface-hover);
+      transform: translateY(-5px);
+      box-shadow: 0 18px 36px rgba(0,0,0,0.35), 0 0 0 1px rgba(249, 115, 22, 0.12);
+    }
+
+    .link-card:hover::after { transform: scaleX(1); }
+
+    .link-icon {
+      font-size: 24px;
+      line-height: 1;
+      transition: transform 0.25s;
+    }
+
+    .link-card:hover .link-icon { transform: scale(1.15); }
+
+    .link-label {
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted-light);
+      transition: color 0.2s;
+    }
+
+    .link-card:hover .link-label { color: var(--orange); }
+
+    /* Quote */
+    .quote-wrap {
+      width: 100%;
+      max-width: 540px;
+      text-align: center;
+      opacity: 0;
+      animation: riseIn 0.7s ease 0.55s forwards;
+    }
+
+    .quote-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--border);
+      margin: 0 auto 16px;
+    }
+
+    .quote-text {
+      font-size: 14px;
+      font-style: italic;
+      color: var(--muted-light);
+      line-height: 1.75;
+    }
+
+    .quote-author {
+      display: block;
+      font-size: 11.5px;
+      font-style: normal;
+      color: var(--orange);
+      margin-top: 9px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div class="brand">PESU <span>Academy</span></div>
+    <div class="ext-pill">🌙 dark mode</div>
+  </div>
+
+  <div class="hero">
+    <div class="greeting" id="greeting">Good morning, <span>PESUian!</span></div>
+
+    <div class="clock">
+      <span id="hh">00</span><span class="colon">:</span><span id="mm">00</span><span class="colon">:</span><span id="ss">00</span>
+    </div>
+
+    <div class="date-display" id="date-display">Loading...</div>
+
+    <div class="links-grid">
+      <a class="link-card" href="https://pesuacademy.com" target="_blank">
+        <span class="link-icon">🏛️</span>
+        <span class="link-label">Portal</span>
+      </a>
+      <a class="link-card" href="https://pesuacademy.com" target="_blank">
+        <span class="link-icon">📚</span>
+        <span class="link-label">Courses</span>
+      </a>
+      <a class="link-card" href="https://pesuacademy.com" target="_blank">
+        <span class="link-icon">📋</span>
+        <span class="link-label">Attendance</span>
+      </a>
+      <a class="link-card" href="https://pesuacademy.com" target="_blank">
+        <span class="link-icon">📊</span>
+        <span class="link-label">Results</span>
+      </a>
+      <a class="link-card" href="https://pesuacademy.com" target="_blank">
+        <span class="link-icon">📣</span>
+        <span class="link-label">Announce</span>
+      </a>
+    </div>
+
+    <div class="quote-wrap">
+      <div class="quote-divider"></div>
+      <p class="quote-text" id="hp-quote"></p>
+      <cite class="quote-author" id="hp-author"></cite>
+    </div>
+  </div>
+
+  <script>
+    const QUOTES = [
+      { text: "The secret of getting ahead is getting started.", author: "Mark Twain" },
+      { text: "It always seems impossible until it's done.", author: "Nelson Mandela" },
+      { text: "Don't watch the clock; do what it does. Keep going.", author: "Sam Levenson" },
+      { text: "Study hard what interests you the most in the most undisciplined, irreverent manner possible.", author: "Richard Feynman" },
+      { text: "The expert in anything was once a beginner.", author: "Helen Hayes" },
+      { text: "Success is the sum of small efforts, repeated day in and day out.", author: "Robert Collier" },
+      { text: "You don't have to be great to start, but you have to start to be great.", author: "Zig Ziglar" },
+      { text: "An investment in knowledge pays the best interest.", author: "Benjamin Franklin" },
+      { text: "Education is the passport to the future — tomorrow belongs to those who prepare today.", author: "Malcolm X" },
+      { text: "Push yourself, because no one else is going to do it for you.", author: "Unknown" },
+    ];
+
+    const q = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+    document.getElementById("hp-quote").textContent = q.text;
+    document.getElementById("hp-author").textContent = "— " + q.author;
+
+    const DAYS   = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+    const MONTHS = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+
+    function pad(n) { return String(n).padStart(2, "0"); }
+
+    function tick() {
+      const now = new Date();
+      document.getElementById("hh").textContent = pad(now.getHours());
+      document.getElementById("mm").textContent = pad(now.getMinutes());
+      document.getElementById("ss").textContent = pad(now.getSeconds());
+
+      document.getElementById("date-display").textContent =
+        `${DAYS[now.getDay()]}, ${MONTHS[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+
+      const h = now.getHours();
+      const greet = h < 12 ? "Good morning" : h < 17 ? "Good afternoon" : "Good evening";
+      document.getElementById("greeting").innerHTML = `${greet}, <span>PESUian!</span>`;
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  </script>
+</body>
+</html>
