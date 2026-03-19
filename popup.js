@@ -1,9 +1,24 @@
-document.getElementById("toggle-style").addEventListener("click", () => {
+const toggleButton = document.getElementById("toggle-style");
+
+toggleButton.addEventListener("click", () => {
   chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
     chrome.scripting.executeScript({
       target: { tabId: tabs[0].id },
       function: toggleStyles,
     });
+
+    if (toggleButton.dataset.enabled === "true") {
+      toggleButton.dataset.enabled = "false";
+      toggleButton.style.backgroundColor = "#c2fbd7";
+      toggleButton.style.color = "green";
+      toggleButton.textContent = "Toggle Mode";
+      return;
+    }
+
+    toggleButton.dataset.enabled = "true";
+    toggleButton.style.backgroundColor = "green";
+    toggleButton.style.color = "#c2fbd7";
+    toggleButton.textContent = "Mode Toggled";
   });
 });
 
@@ -150,9 +165,11 @@ function toggleStyles() {
     fullScreenIcon.href = "javascript:void(0)";
     fullScreenIcon.ariaHidden = true;
 
-    let fullScreenParent = document.getElementsByClassName("link-preview");
+    const fullScreenParent = document.getElementsByClassName("link-preview")[0];
 
-    fullScreen.appendChild(fullScreenIcon);
-    fullScreenParent.appendChild(fullScreen);
+    if (fullScreenParent) {
+      fullScreen.appendChild(fullScreenIcon);
+      fullScreenParent.appendChild(fullScreen);
+    }
   }
 }
