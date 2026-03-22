@@ -15,7 +15,5 @@
       "16": "and.png"
     }
   },
-  "chrome_url_overrides": {
-    "newtab": "homepage.html"
-  }
+
 }
